@@ -5,12 +5,14 @@ RUN apt-get update && apt-get install -y vim git wget build-essential
 COPY pip.conf /root/.pip/pip.conf
 RUN pip3 install jupyterhub-nativeauthenticator notebook jupyterlab jupyter-c-kernel && install_c_kernel --sys-prefix
 
-RUN wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh && chmod 755 Miniconda3-latest-Linux-x86_64.sh && ./Miniconda3-latest-Linux-x86_64.sh -bp /opt/conda && /opt/conda/bin/conda init
-RUN /opt/conda/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ && \
-    /opt/conda/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/ && \
-    /opt/conda/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/ && \
-    /opt/conda/bin/conda config --set show_channel_urls yes && \
-    /opt/conda/bin/conda install xeus-cling -c conda-forge && \
+RUN wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh &&       \
+    chmod 755 Miniconda3-latest-Linux-x86_64.sh && ./Miniconda3-latest-Linux-x86_64.sh -bp /opt/conda &&    \
+    /opt/conda/bin/conda init
+RUN /opt/conda/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ &&          \
+    /opt/conda/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/ &&          \
+    /opt/conda/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/ &&  \
+    /opt/conda/bin/conda config --set show_channel_urls yes &&                                                      \
+    /opt/conda/bin/conda install xeus-cling -c conda-forge &&                                                       \
     jupyter kernelspec install /opt/conda/share/jupyter/kernels/xcpp17 --prefix /usr/local
 
 RUN ln -s /public /etc/skel/public
@@ -37,14 +39,9 @@ RUN pip3 install nbdime && \
 RUN pip3 install jupyter-lsp && \
     jupyter labextension install @krassowski/jupyterlab-lsp && \
     jupyter serverextension enable --system jupyterlab-lsp
-
 RUN pip3 install python-language-server[all] && \
     apt-get install -y clangd-10 && \
     npm install -g bash-language-server
-
-RUN jupyter labextension install @jupyterlab/github && \
-    pip3 install jupyterlab_github && \
-    jupyter serverextension enable --system jupyterlab_github
 
 RUN jupyter lab build
 

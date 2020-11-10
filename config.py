@@ -21,14 +21,11 @@ def pre_spawn_hook(spawner):
 
 c.Spawner.pre_spawn_hook = pre_spawn_hook
 
-c.GitHubConfig.access_token = "532d2dc998ee9f04556bee6a0c2f8781fc2d45ab"
-
-import shutil
-c.LanguageServerManager.language_servers = {
-    "C": {
-        "argv": [shutil.which("clangd-10")],
-        "languages": ["c", "C", "c++", "C++17", "xcpp17", "c++src", "text/x-c++src"],
-        "version": 1
-    }
-}
-
+# import shutil
+# c.LanguageServerManager.language_servers = {
+#     "C": {
+#         "argv": [shutil.which("clangd-10")],
+#         "languages": ["c", "C", "c++", "C++17", "xcpp17", "c++src", "text/x-c++src"],
+#         "version": 1
+#     }
+# }
